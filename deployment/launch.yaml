@@ -1,0 +1,11 @@
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: manifests
+  namespace: fleet-system
+spec:
+  branch: master
+  clientSecretName: gitrepo-auth-g28z2
+  repo: git@bitbucket.org:asyx/rancher-beta.git
+  paths:
+  - deployment
