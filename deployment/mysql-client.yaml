@@ -43,3 +43,12 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-persistent-storage
+    spec:
+      storageClassName: longhorn
+      accessModes: [ ReadWriteMany ]
+      resources:
+        requests:
+          storage: 5Gi
