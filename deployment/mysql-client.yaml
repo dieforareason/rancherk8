@@ -19,7 +19,7 @@ metadata:
   labels:
     app: mysql
 spec:
-  serviceName: mysql-svc
+  serviceName: mysql-service
   selector:
     matchLabels:
       app: mysql
