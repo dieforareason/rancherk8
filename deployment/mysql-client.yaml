@@ -34,7 +34,7 @@ spec:
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
-          values: asyx436
+          value: asyx436
         livenessProbe:
           tcpSocket:
             port: 3306
