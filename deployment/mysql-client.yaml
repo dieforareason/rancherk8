@@ -12,40 +12,45 @@ spec:
   clusterIP: None
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mysql
+  namespace: x4-s24
   labels:
     app: mysql
 spec:
+  serviceName: mysql-svc
   selector:
     matchLabels:
       app: mysql
-  strategy:
-    type: Recreate
+  replicas: 1
   template:
     metadata:
       labels:
         app: mysql
     spec:
       containers:
-      - image: arey/mysql-client
-        name: mysql
+      - name: mysql
+        image: arey/mysql-client
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: asyx436
-        livenessProbe:
-          tcpSocket:
-            port: 3306
+          value: "asyx436"
         ports:
-        - containerPort: 3306
-          name: mysql
+        - name: mysql
+          containerPort: 3306
         volumeMounts:
-        - name: mysql-persistent-storage
+        - name: mysql-data
           mountPath: /var/lib/mysql
+          subPath: mysql
+      volumes:
+      - name: mysql-data
+        persistentVolumeClaim:
+          claimName: mysql-data
+      - name: mysql-entrypoint-vol
+        emptyDir: {} 
   volumeClaimTemplates:
   - metadata:
-      name: mysql-persistent-storage
+      name: mysql-data
     spec:
       storageClassName: longhorn
       accessModes: [ ReadWriteMany ]
